@@ -1,14 +1,17 @@
-from libqtile import widget
+import os
+from libqtile import widget,qtile
 from .theme import colors
+from .path import qtile_path
+from libqtile.command import lazy
 
 # Get the icons at https://www.nerdfonts.com/cheat-sheet (you need a Nerd Font)
 
-def base(fg='text', bg='dark'): 
+
+def base(fg='text', bg='dark'):
     return {
         'foreground': colors[fg],
         'background': colors[bg]
     }
-
 
 def separator():
     return widget.Sep(**base(), linewidth=0, padding=5)
@@ -26,18 +29,19 @@ def icon(fg='text', bg='dark', fontsize=16, text="?"):
 def powerline(fg="light", bg="dark"):
     return widget.TextBox(
         **base(fg, bg),
-        text="", # Icon: nf-oct-triangle_left
+        text="",  # Icon: nf-oct-triangle_left
         fontsize=37,
         padding=-2
     )
 
 
-def workspaces(): 
+def workspaces():
     return [
         separator(),
         widget.GroupBox(
             **base(fg='light'),
-            font='UbuntuMono Nerd Font',
+            # font='UbuntuMono Nerd Font',
+            font='JetBrains Mono Nerd Font',
             fontsize=19,
             margin_y=3,
             margin_x=0,
@@ -61,19 +65,26 @@ def workspaces():
         separator(),
     ]
 
+# Power Menu
+power_menu_widget = widget.TextBox(
+    text="󰣇",
+    fontsize=19,
+    padding=4,
+    foreground="0066ff",
+    background=colors['dark'],
+    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(
+        os.path.join(qtile_path, "settings", "powermenu.py")
+    )}
+)
+
+
 
 primary_widgets = [
     *workspaces(),
 
     separator(),
 
-    powerline('color3', 'dark'),
-
-    icon(bg="color3", text=' '),  # Icon: nf-fa-feed
-    
-    widget.Net(**base(bg='color3'), interface='wlp2s0'),
-
-    powerline('color2', 'color3'),
+    powerline('color2', 'dark'),
 
     widget.CurrentLayoutIcon(**base(bg='color2'), scale=0.65),
 
@@ -81,13 +92,15 @@ primary_widgets = [
 
     powerline('color1', 'color2'),
 
-    icon(bg="color1", fontsize=17, text='󰅐 '), # Icon: nf-mdi-calendar_clock
+    icon(bg="color1", fontsize=17, text='󰅐 '),  # Icon: nf-mdi-calendar_clock
 
     widget.Clock(**base(bg='color1'), format='%d/%m/%Y - %H:%M '),
 
     powerline('dark', 'color1'),
 
-    widget.Systray(background=colors['dark'], padding=5),
+    widget.Systray(background=colors['dark'], padding=4),
+
+    power_menu_widget,
 ]
 
 secondary_widgets = [
