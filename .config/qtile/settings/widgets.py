@@ -67,21 +67,7 @@ primary_widgets = [
 
     separator(),
 
-    powerline('color4', 'dark'),
-
-    icon(bg="color4", text=' '), # Icon: nf-fa-download
-    
-    widget.CheckUpdates(
-        background=colors['color4'],
-        colour_have_updates=colors['text'],
-        colour_no_updates=colors['text'],
-        no_update_string='0',
-        display_format='{updates}',
-        update_interval=1800,
-        custom_command='checkupdates',
-    ),
-
-    powerline('color3', 'color4'),
+    powerline('color3', 'dark'),
 
     icon(bg="color3", text=' '),  # Icon: nf-fa-feed
     
@@ -95,7 +81,7 @@ primary_widgets = [
 
     powerline('color1', 'color2'),
 
-    icon(bg="color1", fontsize=17, text=' '), # Icon: nf-mdi-calendar_clock
+    icon(bg="color1", fontsize=17, text='󰅐 '), # Icon: nf-mdi-calendar_clock
 
     widget.Clock(**base(bg='color1'), format='%d/%m/%Y - %H:%M '),
 
@@ -123,8 +109,8 @@ secondary_widgets = [
 ]
 
 widget_defaults = {
-    'font': 'UbuntuMono Nerd Font Bold',
-    'fontsize': 14,
+    'font': 'JetBrains Mono Nerd Font',
+    'fontsize': 12,
     'padding': 1,
 }
 extension_defaults = widget_defaults.copy()
